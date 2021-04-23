@@ -102,6 +102,8 @@ module OAuth2
 
       url = connection.build_url(url).to_s
 
+      opts[:body] = opts[:body].to_json if opts[:headers]["Content-Type"] == "application/json"
+
       response = connection.run_request(verb, url, opts[:body], opts[:headers]) do |req|
         req.params.update(opts[:params]) if opts[:params]
         yield(req) if block_given?
